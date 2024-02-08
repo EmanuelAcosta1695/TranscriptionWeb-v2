@@ -9,7 +9,7 @@ export const SelectFile = ({handleDrop, handleDragOver, handleFileChange}) => {
             onDragOver={handleDragOver}
             style={{ cursor: 'pointer', color: 'white' }}
         >
-            Arrastra y suelta un archivo de audio aquí o haz clic para cargar
+            Drag and drop an audio file here or click to upload
             <br />
             <button className='btn btn-primary btn-sm mt-2 mb-0' onClick={() => document.getElementById('audio-upload').click()}>+</button>
             <input

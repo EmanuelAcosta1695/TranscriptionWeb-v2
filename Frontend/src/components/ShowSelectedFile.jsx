@@ -51,16 +51,16 @@ export const ShowSelectedFile = ({ clearFileAndNotification, audioFile, setAudio
                 !text ? (
                     <>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'white' }}>
-                            <p style={{ marginBottom: '5px', textDecoration: 'underline' }}>Archivo de audio seleccionado:</p>
+                            <p style={{ marginBottom: '5px', textDecoration: 'underline' }}>Selected audio file:</p>
                             <p style={{ marginBottom: '10px' }}>{audioFile.name}</p>
                             <DeleteSelectedFileButton clearFileAndNotification={clearFileAndNotification} />
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'white', marginTop: '5%' }}>
-                            <p style={{ marginBottom: '10px' }}>¿En qué idioma está el archivo?</p>
+                            <p style={{ marginBottom: '10px' }}>What language is the file in?</p>
                             <Dropdown onLanguageChange={handleLanguageChange} />
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'white', marginTop: '6%' }}>
-                            <p style={{ marginBottom: '3%' }}>¿Desea transcribir el audio seleccionado?</p>
+                            <p style={{ marginBottom: '3%' }}>Do you want to transcribe the selected audio?</p>
                             <button className='btn btn-success' onClick={handleConvert} disabled={!language}>Convertir</button>
                         </div>
                     </>
@@ -73,7 +73,7 @@ export const ShowSelectedFile = ({ clearFileAndNotification, audioFile, setAudio
                             setAudioFile={setAudioFile}
                         />
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                            <button className='btn btn-primary' onClick={handleDownloadText}>Descargar Texto</button>
+                            <button className='btn btn-primary' onClick={handleDownloadText}>Download Text</button>
                         </div>
                     </>
                     )

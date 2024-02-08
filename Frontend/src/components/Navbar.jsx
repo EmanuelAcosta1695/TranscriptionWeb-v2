@@ -1,28 +1,25 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 export const Navbar = () => {
   return (
     <>
         <nav className="navbar navbar-expand-lg custom-bg-gradient">
             <div className="container-fluid">
-                <a className="navbar-brand text-light" href="#">Navbar</a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
                 <div className="collapse navbar-collapse text-light" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link active text-light" aria-current="page" href="#">Home</a>
+                            <NavLink to='/' className="nav-link active text-light">Home</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link text-light" href="#">Features</a>
+                        <li className="nav-item">   
+                            <NavLink to='/AboutPage' className="nav-link active text-light">About</NavLink>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <a className="nav-link text-light" href="#">Pricing</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link text-light" aria-disabled="true">Disabled</a>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>

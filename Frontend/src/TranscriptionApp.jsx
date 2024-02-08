@@ -16,14 +16,14 @@ export const TranscriptionApp = () => {
             const extension = '.' + file.name.split('.').pop();
 
             if (!allowedExtensions.includes(extension)) {
-                alert('El archivo seleccionado no es válido. Por favor, selecciona un archivo con una extensión válida.');
+                alert('The selected file is not valid. Please select a file with a valid extension.');
                 event.target.value = null; // Limpia el valor del input file
                 return;
             }
         }
         
         setAudioFile(file);
-        setNotificationMessage('Archivo cargado con éxito');
+        setNotificationMessage('File uploaded successfully');
         setShowNotification(true); // Mostrar la notificación cuando se carga el archivo
         
         setTimeout(() => {
@@ -37,7 +37,7 @@ export const TranscriptionApp = () => {
         const file = event.dataTransfer.files[0];
         
         setAudioFile(file);
-        setNotificationMessage('Archivo cargado con éxito');
+        setNotificationMessage('File uploaded successfully');
         setShowNotification(true); // Mostrar la notificación cuando se carga el archivo
         
         setTimeout(() => {
@@ -76,8 +76,8 @@ export const TranscriptionApp = () => {
                 <br />
                 <div className='box'>
                     <ul>
-                        <li style={{ marginBottom: '10px' }}>Solo se transcribirán perfectamente archivos de audio sin ruido de fondo.</li>
-                        <li style={{ marginBottom: '10px' }}>Las extensiones soportadas son: <br />.wav, .aiff, .aif, .flac</li>
+                        <li style={{ marginBottom: '10px' }}>Only audio files without background noise and with good pronunciation will be perfectly transcribed.</li>
+                        <li style={{ marginBottom: '10px' }}>Supported extensions are: <br />.wav, .aiff, .aif, .flac</li>
                     </ul>
                 </div>
             </div>
