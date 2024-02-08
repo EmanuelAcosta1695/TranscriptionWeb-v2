@@ -32,11 +32,20 @@ export const ShowSelectedFile = ({ clearFileAndNotification, audioFile, setAudio
         setEditableText(event.target.value); // Actualiza el texto editable cuando cambia
     };
 
+    const handleDownloadText = () => {
+        const element = document.createElement("a");
+        const file = new Blob([editableText], { type: 'text/plain' });
+        element.href = URL.createObjectURL(file);
+        element.download = audioFile.name;
+        document.body.appendChild(element); // Required for this to work in FireFox
+        element.click();
+    };
+
     return (
         <div className="drop-zone">
             {isLoading ? 
                 <div className="spinner-border text-light" style={{width: '3rem', height: '3rem'}} role="status">
-                    <span class="sr-only"></span>
+                    <span className="sr-only"></span>
                 </div>
                 : 
                 !text ? (
@@ -56,14 +65,21 @@ export const ShowSelectedFile = ({ clearFileAndNotification, audioFile, setAudio
                         </div>
                     </>
                 ) : (
-                    <Textarea 
-                        editableText={editableText} 
-                        handleTextChange={handleTextChange}
-                        setText={setText}
-                        setAudioFile={setAudioFile}
-                    />
+                    <>
+                        <Textarea 
+                            editableText={editableText} 
+                            handleTextChange={handleTextChange}
+                            setText={setText}
+                            setAudioFile={setAudioFile}
+                        />
+                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                            <button className='btn btn-primary' onClick={handleDownloadText}>Descargar Texto</button>
+                        </div>
+                    </>
                     )
             }
         </div>
     );
 };
+
+// DESCARGAR TRANSCRIPCION
