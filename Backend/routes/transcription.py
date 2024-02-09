@@ -11,17 +11,17 @@ extensiones_validas = ['wav', 'aiff', 'aif', 'flac']
 
 # Diccionario de idiomas soportados
 idiomas_validos = {
-    "Español": "es-es",
-    "Inglés": "en-us",
-    "Italiano": "it-it",
-    "Francés": "fr-fr",
-    "Alemán": "de-de",
-    "Árabe": "ar-qa",
-    "Japonés": "ja",
-    "Coreano": "ko",
-    "Chino Mandarín": "zh-cn",
-    "Chino Tradicional": "zh-yue",
-    "Ruso": "ru"
+    "Spanish": "es-es",
+    "English": "en-us",
+    "Italian": "it-it",
+    "French": "fr-fr",
+    "German": "de-de",
+    "Arab": "ar-qa",
+    "Japanese": "ja",
+    "Korean": "ko",
+    "Mandarin Chinese": "zh-cn",
+    "Traditional Chinese": "zh-yue",
+    "Russian": "ru"
 }
 
 
