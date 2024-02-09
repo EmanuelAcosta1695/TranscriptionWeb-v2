@@ -3,6 +3,10 @@ import { DeleteSelectedFileButton } from './DeleteSelectedFileButton';
 import { Dropdown } from './Dropdown';
 import { fetchAudioToText } from '../helpers/fetchAudioToText';
 import { Textarea } from './Textarea';
+import { Document, Packer, Paragraph, TextRun } from "docx";
+import jsPDF from 'jspdf';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileDownload, faFileWord, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 
 export const ShowSelectedFile = ({ clearFileAndNotification, audioFile, setAudioFile }) => {
     const [language, setLanguage] = useState('');
@@ -41,6 +45,48 @@ export const ShowSelectedFile = ({ clearFileAndNotification, audioFile, setAudio
         element.click();
     };
 
+    const handleDownloadWord = () => {
+        const doc = new Document({
+            sections: [
+                {
+                    properties: {
+                        title: 'Document Title',
+                        author: 'Author Name',
+                        created: new Date(),
+                    },
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun(editableText),
+                            ],
+                        }),
+                    ],
+                },
+            ],
+        });
+    
+        Packer.toBlob(doc).then(blob => {
+            // Crear un enlace de descarga
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = 'MyDocument.docx';
+    
+            // Agregar el enlace al documento y hacer clic en él para descargar el archivo
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+    
+            // Limpiar el enlace después de la descarga
+            document.body.removeChild(downloadLink);
+        });
+    };
+
+    // Función para descargar como archivo PDF
+    const handleDownloadPDF = () => {
+        const pdf = new jsPDF();
+        pdf.text(editableText, 10, 10);
+        pdf.save(audioFile.name);
+    };
+
     return (
         <div className="drop-zone">
             {isLoading ? 
@@ -73,7 +119,15 @@ export const ShowSelectedFile = ({ clearFileAndNotification, audioFile, setAudio
                             setAudioFile={setAudioFile}
                         />
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                            <button className='btn btn-primary' onClick={handleDownloadText}>Download Text</button>
+                            <button className='btn btn-primary m-1' onClick={handleDownloadText}>
+                                <FontAwesomeIcon icon={faFileDownload} /> Download Text
+                            </button>
+                            <button className='btn btn-primary m-1' onClick={handleDownloadWord}>
+                                <FontAwesomeIcon icon={faFileWord} /> Download Word
+                            </button>
+                            <button className='btn btn-primary m-1' onClick={handleDownloadPDF}>
+                                <FontAwesomeIcon icon={faFilePdf} /> Download PDF
+                            </button>
                         </div>
                     </>
                     )

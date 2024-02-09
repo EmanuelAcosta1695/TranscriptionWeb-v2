@@ -26,21 +26,18 @@ export const Dropdown = ({ onLanguageChange }) => {
                 {language || 'Idioma'}
             </button>
             <div className={`dropdown-menu ${isOpen ? 'show' : ''}`}>
-                <a className="dropdown-item" onClick={() => handleLanguageSelection('Español')} href="#">Spanish</a>
-                <a className="dropdown-item" onClick={() => handleLanguageSelection('Inglés')} href="#">English</a>
-                <a className="dropdown-item" onClick={() => handleLanguageSelection('Italiano')} href="#">Italian</a>  
-                <a className="dropdown-item" onClick={() => handleLanguageSelection('Francés')} href="#">French</a>
-                <a className="dropdown-item" onClick={() => handleLanguageSelection('Alemán')} href="#">German</a>
-                <a className="dropdown-item" onClick={() => handleLanguageSelection('Árabe')} href="#">Arab</a>
-                <a className="dropdown-item" onClick={() => handleLanguageSelection('Japonés')} href="#">Japanese</a>
-                <a className="dropdown-item" onClick={() => handleLanguageSelection('Coreano')} href="#">Korean</a>
-                <a className="dropdown-item" onClick={() => handleLanguageSelection('Chino Mandarín')} href="#">Mandarin Chinese</a>
-                <a className="dropdown-item" onClick={() => handleLanguageSelection('Chino Tradicional')} href="#">Traditional Chinese</a>
-                <a className="dropdown-item" onClick={() => handleLanguageSelection('Ruso')} href="#">Russian</a>
+                <a className="dropdown-item" onClick={() => handleLanguageSelection('Spanish')} href="#">Spanish</a>
+                <a className="dropdown-item" onClick={() => handleLanguageSelection('English')} href="#">English</a>
+                <a className="dropdown-item" onClick={() => handleLanguageSelection('Italian')} href="#">Italian</a>  
+                <a className="dropdown-item" onClick={() => handleLanguageSelection('French')} href="#">French</a>
+                <a className="dropdown-item" onClick={() => handleLanguageSelection('German')} href="#">German</a>
+                <a className="dropdown-item" onClick={() => handleLanguageSelection('Arab')} href="#">Arab</a>
+                <a className="dropdown-item" onClick={() => handleLanguageSelection('Japanese')} href="#">Japanese</a>
+                <a className="dropdown-item" onClick={() => handleLanguageSelection('Korean')} href="#">Korean</a>
+                <a className="dropdown-item" onClick={() => handleLanguageSelection('Mandarin Chinese')} href="#">Mandarin Chinese</a>
+                <a className="dropdown-item" onClick={() => handleLanguageSelection('Traditional Chinese')} href="#">Traditional Chinese</a>
+                <a className="dropdown-item" onClick={() => handleLanguageSelection('Russian')} href="#">Russian</a>
             </div>
         </div>
     );
 };
-
-
-
