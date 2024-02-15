@@ -11,18 +11,22 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <React.StrictMode>
       <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <TranscriptionApp />
-            </>
-          }
-        />
-        <Route path="/AboutPage" element={<AboutPage />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+      <div className="app-container">
+        <div className="left-band"></div>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <TranscriptionApp />
+                </>
+              }
+            />
+            <Route path="/AboutPage" element={<AboutPage />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        <div className="right-band"></div>
+      </div>
     </React.StrictMode>
   </BrowserRouter>
 );

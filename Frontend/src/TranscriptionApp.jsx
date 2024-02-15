@@ -57,32 +57,26 @@ export const TranscriptionApp = () => {
     };
 
     return (
-        <div className="app-container">
-            <div className="left-band"></div>
+        <div className="content">
+            {!audioFile ? (
+                <SelectFile 
+                    handleDrop={handleDrop} 
+                    handleDragOver={handleDragOver} 
+                    handleFileChange={handleFileChange}
+                />
+            ) : (
+                <ShowSelectedFile clearFileAndNotification={clearFileAndNotification} audioFile={audioFile} setAudioFile={setAudioFile}/>
+            )}
             
-            <div className="content">
-                {!audioFile ? (
-                    <SelectFile 
-                        handleDrop={handleDrop} 
-                        handleDragOver={handleDragOver} 
-                        handleFileChange={handleFileChange}
-                    />
-                ) : (
-                    <ShowSelectedFile clearFileAndNotification={clearFileAndNotification} audioFile={audioFile} setAudioFile={setAudioFile}/>
-                )}
-                
-                {showNotification && <Notification message={notificationMessage} />}
+            {showNotification && <Notification message={notificationMessage} />}
 
-                <br />
-                <div className='box'>
-                    <ul>
-                        <li style={{ marginBottom: '10px' }}>Only audio files without background noise and with good pronunciation will be perfectly transcribed.</li>
-                        <li style={{ marginBottom: '10px' }}>Supported extensions are: <br />.wav, .aiff, .aif, .flac</li>
-                    </ul>
-                </div>
+            <br />
+            <div className='box'>
+                <ul>
+                    <li style={{ marginBottom: '10px' }}>Only audio files without background noise and with good pronunciation will be perfectly transcribed.</li>
+                    <li style={{ marginBottom: '10px' }}>Supported extensions are: <br />.wav, .aiff, .aif, .flac</li>
+                </ul>
             </div>
-
-            <div className="right-band"></div>
         </div>
     );
 };
