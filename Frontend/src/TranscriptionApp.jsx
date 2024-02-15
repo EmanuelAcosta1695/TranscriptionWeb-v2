@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Notification } from './components/Notification';
 import { ShowSelectedFile } from './components/ShowSelectedFile';
 import { SelectFile } from './components/SelectFile';
+import { ClarificationComponent } from './components/ClarificationComponent';
 
 export const TranscriptionApp = () => {
     const [audioFile, setAudioFile] = useState(null);
@@ -59,24 +60,23 @@ export const TranscriptionApp = () => {
     return (
         <div className="content">
             {!audioFile ? (
-                <SelectFile 
-                    handleDrop={handleDrop} 
-                    handleDragOver={handleDragOver} 
-                    handleFileChange={handleFileChange}
-                />
+                <>
+                    <SelectFile 
+                        handleDrop={handleDrop} 
+                        handleDragOver={handleDragOver} 
+                        handleFileChange={handleFileChange}
+                    />
+
+                    <ClarificationComponent/>
+                </>
             ) : (
-                <ShowSelectedFile clearFileAndNotification={clearFileAndNotification} audioFile={audioFile} setAudioFile={setAudioFile}/>
+                <>
+                    <ShowSelectedFile clearFileAndNotification={clearFileAndNotification} audioFile={audioFile} setAudioFile={setAudioFile}/>
+                </>
             )}
             
             {showNotification && <Notification message={notificationMessage} />}
 
-            <br />
-            <div className='box'>
-                <ul>
-                    <li style={{ marginBottom: '10px' }}>Only audio files without background noise and with good pronunciation will be perfectly transcribed.</li>
-                    <li style={{ marginBottom: '10px' }}>Supported extensions are: <br />.wav, .aiff, .aif, .flac</li>
-                </ul>
-            </div>
         </div>
     );
 };

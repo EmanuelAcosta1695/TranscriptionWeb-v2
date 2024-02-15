@@ -10,7 +10,7 @@ export const Textarea = ({editableText, handleTextChange, setText, setAudioFile}
             <label htmlFor="exampleFormControlTextarea1" className="form-label">Transcribed Text:</label>
             <textarea 
                 className="form-control" 
-                id="exampleFormControlTextarea1" 
+                id="ControlTextarea1" 
                 rows="3"
                 value={editableText}
                 onChange={handleTextChange}
