@@ -4,10 +4,11 @@ import speech_recognition as sr
 from fastapi import APIRouter, HTTPException
 import tempfile
 import shutil
+import soundfile as sf
 
 
 # Tupla de extensiones válidas
-extensiones_validas = ['wav', 'aiff', 'aif', 'flac']
+extensiones_validas = ['wav', 'aiff', 'aif', 'flac', 'mp3']
 
 # Diccionario de idiomas soportados
 idiomas_validos = {
@@ -33,6 +34,7 @@ async def post_audiofile(audiofile: UploadFile = File(...), language: str = Form
     try:
         # Validación del archivo de audio
         extension = filename.lower().split(".")[-1]
+
         if extension not in extensiones_validas:
             raise HTTPException(status_code=400, detail="Archivo de audio no compatible")
 
@@ -41,8 +43,13 @@ async def post_audiofile(audiofile: UploadFile = File(...), language: str = Form
             raise HTTPException(status_code=400, detail="Idioma no compatible")
 
         # Guardar el archivo en disco temporalmente
-        with tempfile.NamedTemporaryFile(delete=False) as tmp_audio_file:
-            shutil.copyfileobj(audiofile.file, tmp_audio_file)
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.flac') as tmp_audio_file:
+            if extension == 'mp3':
+                # Convertir el archivo MP3 a FLAC
+                data, samplerate = sf.read(audiofile.file)
+                sf.write(tmp_audio_file.name, data, samplerate, format='flac')
+            else:
+                shutil.copyfileobj(audiofile.file, tmp_audio_file)
 
         recognizer = sr.Recognizer()
         
