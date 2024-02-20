@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 
-export const handleDownloadPDF = () => {
+export const downloadPdf = () => {
     const pdf = new jsPDF();
 
     // Definir el tamaño y tipo de letra

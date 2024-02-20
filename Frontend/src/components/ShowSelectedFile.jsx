@@ -5,6 +5,7 @@ import { Textarea } from './Textarea';
 import { fetchAudioToText } from '../helpers/fetchAudioToText';
 import { downloadWord } from '../helpers/downloadWord';
 import { downloadText } from '../helpers/downloadText';
+import { downloadPdf } from '../helpers/downloadPdf';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faFileDownload, faFileWord, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 
@@ -77,7 +78,7 @@ export const ShowSelectedFile = ({ clearFileAndNotification, audioFile, setAudio
                                 {/* <FontAwesomeIcon icon={faFileWord} /> Download Word */}
                                 Download Word
                             </button>
-                            <button className='btn btn-primary m-1' onClick={handleDownloadPDF}>
+                            <button className='btn btn-primary m-1' onClick={downloadPdf}>
                                 {/* <FontAwesomeIcon icon={faFilePdf} /> Download PDF */}
                                 Download PDF
                             </button>
