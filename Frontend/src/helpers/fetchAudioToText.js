@@ -5,7 +5,12 @@ export const fetchAudioToText = async (audioFile, language) => {
         formData.append('language', language);
         formData.append('filename', audioFile.name);
 
-        const response = await fetch('http://127.0.0.1:8000/transcription', {
+        // const response = await fetch('http://127.0.0.1:8000/transcription', {
+        //     method: 'POST',
+        //     body: formData
+        // });
+
+        const response = await fetch('https://transcriptionapi-9rxk.onrender.com/transcription', {
             method: 'POST',
             body: formData
         });
