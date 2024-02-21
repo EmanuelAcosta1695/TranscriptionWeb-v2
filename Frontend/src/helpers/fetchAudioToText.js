@@ -10,7 +10,7 @@ export const fetchAudioToText = async (audioFile, language) => {
         //     body: formData
         // });
 
-        const response = await fetch('https://transcriptionapi-9rxk.onrender.com/transcription', {
+        const response = await fetch('https://transcriptionapi-dfwk.onrender.com/transcription', {
             method: 'POST',
             body: formData
         });
