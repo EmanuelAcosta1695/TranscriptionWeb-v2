@@ -17,7 +17,7 @@ export const AboutPage = () => {
                         (https://gist.github.com/jvanyom/1695ae4b5246fa0c28cbd81c4b047a2c) that could transcribe the audios 
                         to text and with a wide variety of supported languages. But the program works through a terminal. 
                         So I thought about bringing it to a website so that my friend Rahmah, who lives in the United States, 
-                        can also access and transcribe the audios I send her in Spanish into English. That's how I developed 
+                        can also access and transcribe the audios I send her into Spanish. That's how I developed 
                         this page with an entirely educational purpose, both to learn more about React (which I am starting with) 
                         and to learn languages.</p>
                     <p>Emanuel, February 2024.</p>
