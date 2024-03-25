@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 import tempfile
 import shutil
 import soundfile as sf
-import os
+from models.transcriptionResponse import TranscriptionResponse
 
 
 # Tupla de extensiones válidas
@@ -29,9 +29,7 @@ idiomas_validos = {
 
 transcription = APIRouter()
 
-# convertir los archivos al minimi posible 124knps o 64kbps
-
-@transcription.post("/transcription", tags=["transcription"])
+@transcription.post("/transcription", response_model=TranscriptionResponse, tags=["transcription"])
 async def post_audiofile(audiofile: UploadFile = File(...), language: str = Form(...), filename: str = Form(...)):
     try:
         extension = filename.lower().split(".")[-1]
@@ -63,6 +61,6 @@ async def post_audiofile(audiofile: UploadFile = File(...), language: str = Form
 
         texto_transcrito = recognizer.recognize_google(audio, language=idiomas_validos[language])
 
-        return {"texto_transcrito": texto_transcrito}
+        return TranscriptionResponse(texto_transcrito=texto_transcrito)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error en el servidor: {str(e)}")
