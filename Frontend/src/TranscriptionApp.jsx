@@ -11,14 +11,16 @@ export const TranscriptionApp = () => {
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-        const allowedExtensions = ['.wav', '.aiff', '.aif', '.flac', '.mp3'];
+        const allowedExtensions = ['.wav', '.aiff', '.aif', '.flac', '.mp3', '.ogg'];
 
         if (file) {
             const extension = '.' + file.name.split('.').pop();
 
+            console.log('extension: ', extension)
+
             if (!allowedExtensions.includes(extension)) {
                 alert('The selected file is not valid. Please select a file with a valid extension.');
-                event.target.value = null; // Limpia el valor del input file
+                event.target.value = null;
                 return;
             }
         }

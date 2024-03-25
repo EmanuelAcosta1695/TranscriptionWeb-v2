@@ -5,10 +5,11 @@ from fastapi import APIRouter, HTTPException
 import tempfile
 import shutil
 import soundfile as sf
+import os
 
 
 # Tupla de extensiones válidas
-extensiones_validas = ['wav', 'aiff', 'aif', 'flac', 'mp3']
+extensiones_validas = ['wav', 'aiff', 'aif', 'flac', 'mp3', 'ogg']
 
 # Diccionario de idiomas soportados
 idiomas_validos = {
@@ -28,26 +29,29 @@ idiomas_validos = {
 
 transcription = APIRouter()
 
+# convertir los archivos al minimi posible 124knps o 64kbps
 
 @transcription.post("/transcription", tags=["transcription"])
 async def post_audiofile(audiofile: UploadFile = File(...), language: str = Form(...), filename: str = Form(...)):
     try:
-        # Validación del archivo de audio
         extension = filename.lower().split(".")[-1]
 
-        if extension not in extensiones_validas:
-            raise HTTPException(status_code=400, detail="Archivo de audio no compatible")
+        print(f"extension: {extension}")
 
-        # Validación del idioma
+        if extension not in extensiones_validas:
+            detail: str = f"Archivo de audio no compatible: {extension}"
+            raise HTTPException(status_code=400, detail=detail)
+
         if language not in idiomas_validos:
             raise HTTPException(status_code=400, detail="Idioma no compatible")
 
-        # Guardar el archivo en disco temporalmente
         with tempfile.NamedTemporaryFile(delete=False, suffix='.flac') as tmp_audio_file:
             if extension == 'mp3':
-                # Convertir el archivo MP3 a FLAC
                 data, samplerate = sf.read(audiofile.file)
                 sf.write(tmp_audio_file.name, data, samplerate, format='flac')
+            elif extension == 'ogg':
+                ogg_data, ogg_samplerate = sf.read(audiofile.file)
+                sf.write(tmp_audio_file.name, ogg_data, ogg_samplerate, format='flac')
             else:
                 shutil.copyfileobj(audiofile.file, tmp_audio_file)
 

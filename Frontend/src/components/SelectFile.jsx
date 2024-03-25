@@ -14,7 +14,7 @@ export const SelectFile = ({handleDrop, handleDragOver, handleFileChange}) => {
             <button className='btn btn-primary btn-sm mt-2 mb-0' onClick={() => document.getElementById('audio-upload').click()}>+</button>
             <input
                 type="file"
-                accept=".wav, .aiff, .aif, .flac, .mp3"
+                accept=".wav, .aiff, .aif, .flac, .mp3, .ogg"
                 onChange={handleFileChange}
                 style={{ display: 'none' }}
                 id="audio-upload"

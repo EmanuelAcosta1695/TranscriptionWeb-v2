@@ -6,7 +6,7 @@ export const ClarificationComponent = () => {
         <div className='box'>
             <ul>
                 <li style={{ marginBottom: '10px' }}>Only audio files without background noise and with good pronunciation will be perfectly transcribed.</li>
-                <li style={{ marginBottom: '10px' }}>Supported extensions are: <br />.wav, .aiff, .aif, .flac, .mp3</li>
+                <li style={{ marginBottom: '10px' }}>Supported extensions are: <br />.wav, .aiff, .aif, .flac, .mp3, .ogg</li>
             </ul>
         </div>
     </>
