@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { DeleteSelectedFileButton } from '../DeleteSelectedFileButton/DeleteSelectedFileButton'
 import { Dropdown } from '../Dropdown/Dropdown'
 import { Textarea } from '../Textarea/Textarea'
-import { fetchAudioToText } from '../../helpers/fetchAudioToText'
-import { downloadWord } from '../../helpers/downloadWord'
-import { downloadText } from '../../helpers/downloadText'
-import { downloadPdf } from '../../helpers/downloadPdf'
+import { fetchAudioToText } from '../../helpers/fetchAudioToText/fetchAudioToText'
+import { downloadWord } from '../../helpers/downloadFiles/downloadWord'
+import { downloadText } from '../../helpers/downloadFiles/downloadText'
+import { downloadPdf } from '../../helpers/downloadFiles/downloadPdf'
 import { showSelectFileProps } from './ShowSelectedFileType'
 import messages from '../../utils/messages.json'
 
@@ -23,7 +23,7 @@ export const ShowSelectedFile = ({
     setIsLoading(true)
 
     try {
-      const { data } = await fetchAudioToText(audioFile, language)
+      const { data } = await fetchAudioToText({ audioFile, language })
       console.log('Texto convertido:', data)
       setText(data.texto_transcrito)
       setEditableText(data.texto_transcrito)

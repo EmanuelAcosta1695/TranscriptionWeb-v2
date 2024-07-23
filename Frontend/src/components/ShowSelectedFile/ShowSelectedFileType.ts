@@ -1,5 +1,5 @@
 export interface showSelectFileProps {
   clearFileAndNotification: () => void
-  audioFile: File | null
+  audioFile: File
   setAudioFile: (file: File | null) => void
 }
