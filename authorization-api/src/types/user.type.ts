@@ -1,21 +1,13 @@
 export type User = {
-  id: number
   email: string
-  firstName: string
-  lastName: string
+  firstName: string | null
+  lastName: string | null
   isAdmin: boolean
-  createdAt?: Date
+  createdAt: Date
+  updatedAt: Date
 }
 
-// export type LoginSuccessResponse = {
-//   message: string
-//   data: {
-//     token: string
-//     user: string
-//   }
-// }
-
-// export type LoginErrorResponse = {
-//   message: string
-//   data: null
-// }
+export type LoginResponse = {
+  token: string
+  user: string
+}

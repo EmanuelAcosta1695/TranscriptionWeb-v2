@@ -1,9 +1,18 @@
 import express from 'express'
-import { create, login } from '../controllers/user.controllers'
 import {
+  create,
+  login,
+  getUserById,
+  updateUserById,
+  deleteUserById,
+} from '../controllers/user.controllers'
+import {
+  getUserByIdValidationRules,
   registerValidationRules,
+  updateValidationRules,
   userValidationRules,
 } from '../utils/validations'
+import { authentification } from '../middleware/authentification'
 
 export const userRouter = express.Router()
 
@@ -11,10 +20,18 @@ userRouter.post('/signin', registerValidationRules, create)
 
 userRouter.post('/login', userValidationRules, login)
 
-// Router.get("/users", userControllers.findAll);
-// Router.post("/signin", userControllers.create);
-// Router.post("/login", userControllers.login);
-// Router.get("/user/:id", userControllers.findById);
-// Router.get("/user/:email", userControllers.findByEmail);
-// Router.put("/user/:id", userControllers.update);
-// Router.delete("/user/:id", userControllers.delete);
+userRouter.get('/getUserById', getUserByIdValidationRules, getUserById)
+
+userRouter.put(
+  '/updateUserById',
+  authentification,
+  updateValidationRules,
+  updateUserById
+)
+
+userRouter.delete(
+  '/updateUserById',
+  authentification,
+  getUserByIdValidationRules,
+  deleteUserById
+)

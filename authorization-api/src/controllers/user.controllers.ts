@@ -1,29 +1,24 @@
 import { Request, Response } from 'express'
-import { registerNewUser, loginUser } from '../services/user.service'
-import { validationResult } from 'express-validator'
+import {
+  registerNewUser,
+  loginUser,
+  getUserDataById,
+  updateUserDataById,
+  deleteUserDataById,
+} from '../services/user.service'
+import { handleRequest } from '../middleware/requestHandler'
 
-export const create = async (req: Request, res: Response) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() })
-  }
+export const create = (req: Request, res: Response) =>
+  handleRequest(req, res, registerNewUser)
 
-  try {
-    await registerNewUser(req, res)
-  } catch (error) {
-    res.status(500).json({ error: true, message: 'Internal server error' })
-  }
-}
+export const login = (req: Request, res: Response) =>
+  handleRequest(req, res, loginUser)
 
-export const login = async (req: Request, res: Response) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() })
-  }
+export const getUserById = (req: Request, res: Response) =>
+  handleRequest(req, res, getUserDataById)
 
-  try {
-    await loginUser(req, res)
-  } catch (error) {
-    res.status(500).json({ error: true, message: 'Internal server error' })
-  }
-}
+export const updateUserById = (req: Request, res: Response) =>
+  handleRequest(req, res, updateUserDataById)
+
+export const deleteUserById = (req: Request, res: Response) =>
+  handleRequest(req, res, deleteUserDataById)
