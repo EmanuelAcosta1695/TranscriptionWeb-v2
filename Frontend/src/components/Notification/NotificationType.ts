@@ -1,3 +1,3 @@
-export interface NotificationProps {
+export type NotificationProps = {
   message: string | null
 }

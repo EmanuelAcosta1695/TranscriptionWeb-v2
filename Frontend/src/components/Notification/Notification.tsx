@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NotificationProps } from './NotificationType'
+import { left } from '@popperjs/core'
+import { DefaultButton } from '../DefaultButton/DefaultButton'
 
 export const Notification = ({ message }: NotificationProps) => {
   const [isVisible, setIsVisible] = useState(false)
@@ -20,6 +22,8 @@ export const Notification = ({ message }: NotificationProps) => {
     return null
   }
 
+  const handleCloseClick = () => setIsVisible(false)
+
   return (
     <div
       style={{
@@ -33,7 +37,13 @@ export const Notification = ({ message }: NotificationProps) => {
       }}
     >
       <span>{message}</span>
-      {/* <button onClick={() => setIsVisible(false)}>X</button> */}
+      <DefaultButton
+        styles="btn btn-sm"
+        onClick={handleCloseClick}
+        style={{ marginBottom: '2px' }}
+      >
+        x
+      </DefaultButton>
     </div>
   )
 }

@@ -1,12 +1,17 @@
 import React from 'react'
 import allowedExtensions from '../../utils/allowedExtensions.json'
 import { SelectFileProps } from './selectFileType'
+import messages from '../../utils/messages.json'
+import { DefaultButton } from '../DefaultButton/DefaultButton'
 
 export const SelectFile = ({
   handleDrop,
   handleDragOver,
   handleInputChange,
 }: SelectFileProps) => {
+  const handleUploadClick = () =>
+    document.getElementById('audio-upload')?.click()
+
   return (
     <label
       htmlFor="audio-upload"
@@ -15,14 +20,14 @@ export const SelectFile = ({
       onDragOver={handleDragOver}
       style={{ cursor: 'pointer', color: 'white' }}
     >
-      Drag and drop an audio file here or click to upload
+      {messages['drag-and-dropd-audio-file']}
       <br />
-      <button
-        className="btn btn-primary btn-sm mt-2 mb-0"
-        onClick={() => document.getElementById('audio-upload')?.click()}
+      <DefaultButton
+        styles={'btn btn-primary btn-sm mt-2 mb-0'}
+        onClick={handleUploadClick}
       >
         +
-      </button>
+      </DefaultButton>
       <input
         type="file"
         accept={allowedExtensions['allowed-extensions']}

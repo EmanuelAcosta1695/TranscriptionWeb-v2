@@ -8,6 +8,7 @@ import { downloadText } from '../../helpers/downloadFiles/downloadText'
 import { downloadPdf } from '../../helpers/downloadFiles/downloadPdf'
 import { showSelectFileProps } from './ShowSelectedFileType'
 import messages from '../../utils/messages.json'
+import { DownloadButton } from '../DownloadButton/DownloadButton'
 
 export const ShowSelectedFile = ({
   clearFileAndNotification,
@@ -18,6 +19,14 @@ export const ShowSelectedFile = ({
   const [text, setText] = useState<string>('')
   const [editableText, setEditableText] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const arrayFunctions = {
+    [messages['download-word']]: downloadWord,
+    [messages['download-text']]: downloadText,
+    [messages['download-pdf']]: downloadPdf,
+  }
+
+  const functionsArray = Object.entries(arrayFunctions)
 
   const handleConvert = async () => {
     setIsLoading(true)
@@ -67,7 +76,7 @@ export const ShowSelectedFile = ({
             }}
           >
             <p style={{ marginBottom: '5px', textDecoration: 'underline' }}>
-              Selected audio file:
+              {messages['selected-audio-file']}
             </p>
             <p style={{ marginBottom: '10px' }}>{audioFile?.name}</p>
             <DeleteSelectedFileButton
@@ -103,7 +112,7 @@ export const ShowSelectedFile = ({
               onClick={handleConvert}
               disabled={!language}
             >
-              Convertir
+              {messages['convert-autio-to-text']}
             </button>
           </div>
         </>
@@ -122,26 +131,17 @@ export const ShowSelectedFile = ({
               marginTop: '20px',
             }}
           >
-            <button
-              className="btn btn-info m-1"
-              onClick={() => downloadText({ audioFile, editableText })}
-            >
-              Download Text
-            </button>
-            <button
-              className="btn btn-primary m-1"
-              onClick={() => downloadWord({ audioFile, editableText })}
-            >
-              Download Word
-            </button>
-            <button
-              className="btn btn-danger m-1"
-              onClick={() => downloadPdf({ audioFile, editableText })}
-            >
-              Download PDF
-            </button>
+            {functionsArray.map(([key, func]) => (
+              <DownloadButton
+                key={key}
+                nameFunction={key}
+                downloadFunction={func}
+                audioFile={audioFile}
+                editableText={editableText}
+              />
+            ))}
             <button className="btn btn-success m-1" onClick={shareViaWhatsApp}>
-              Share on WhatsApp
+              {messages['share-on-whatsapp']}
             </button>
           </div>
         </>

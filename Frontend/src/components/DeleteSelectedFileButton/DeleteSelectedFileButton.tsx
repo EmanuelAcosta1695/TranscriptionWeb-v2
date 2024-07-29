@@ -1,14 +1,14 @@
+import { DefaultButton } from '../DefaultButton/DefaultButton'
 import { deleteSelectedFileButtonProps } from './DeleteSelectedFileButtonType'
 
 export const DeleteSelectedFileButton = ({
   clearFileAndNotification,
 }: deleteSelectedFileButtonProps) => {
+  const handleClearClick = () => clearFileAndNotification()
+
   return (
-    <button
-      className="btn btn-sm btn-danger"
-      onClick={clearFileAndNotification}
-    >
+    <DefaultButton styles="btn btn-sm btn-danger" onClick={handleClearClick}>
       X
-    </button>
+    </DefaultButton>
   )
 }

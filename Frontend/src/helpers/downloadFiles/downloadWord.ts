@@ -18,20 +18,18 @@ export const downloadWord = ({ audioFile, editableText }: downloadProps) => {
   })
 
   Packer.toBlob(doc).then((blob) => {
-    // Crear un enlace de descarga
     const downloadLink = document.createElement('a')
     downloadLink.href = URL.createObjectURL(blob)
 
-    // Verifica si el nombre del archivo termina en ".mp3"
+    // Check if the file name ends in ".mp3"
     let fileName = audioFile?.name
     if (fileName?.endsWith('.mp3')) {
-      // Si termina en ".mp3", quita la extensión del nombre del archivo
+      // If it ends in ".mp3", remove the extension from the file name
       fileName = fileName?.slice(0, -4)
     }
 
     downloadLink.download = fileName + '.docx'
 
-    // Agregar el enlace al documento y hacer clic en él para descargar el archivo
     document.body.appendChild(downloadLink)
     downloadLink.click()
   })
