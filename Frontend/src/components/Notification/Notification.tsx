@@ -40,7 +40,7 @@ export const Notification = ({ message }: NotificationProps) => {
       <DefaultButton
         styles="btn btn-sm"
         onClick={handleCloseClick}
-        style={{ marginBottom: '2px' }}
+        style={{ marginBottom: '4px' }}
       >
         x
       </DefaultButton>

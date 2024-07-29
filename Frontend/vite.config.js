@@ -15,4 +15,7 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
+  rollupOptions: {
+    external: ['react-i18next', 'i18next'],
+  },
 })

@@ -3,8 +3,9 @@ import { Notification } from '../components/Notification/Notification'
 import { ShowSelectedFile } from '../components/ShowSelectedFile/ShowSelectedFile'
 import { SelectFile } from '../components/SelectFile/SelectFile'
 import { ClarificationComponent } from '../components/ClarificationComponent/ClarificationComponent'
-import messages from '../utils/messages.json'
+import { useTranslation } from 'react-i18next'
 import { allowedExtensionsSet } from '../utils/allowedExtensionsSet'
+import '../../i18n.js'
 
 export const TranscriptionApp = () => {
   const [audioFile, setAudioFile] = useState<File | null>(null)
@@ -12,6 +13,7 @@ export const TranscriptionApp = () => {
     null
   )
   const [showNotification, setShowNotification] = useState<boolean>(false)
+  const { t } = useTranslation()
 
   const showNotificationMessage = (message: string) => {
     setNotificationMessage(message)
@@ -26,12 +28,12 @@ export const TranscriptionApp = () => {
     const extension = '.' + file.name.split('.').pop()?.toLowerCase()
 
     if (extension && !allowedExtensionsSet.has(extension)) {
-      showNotificationMessage(messages['invalid-file'])
+      showNotificationMessage(t('invalid-file'))
       return
     }
 
     setAudioFile(file)
-    showNotificationMessage(messages['file-uploaded'])
+    showNotificationMessage(t('file-uploaded'))
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

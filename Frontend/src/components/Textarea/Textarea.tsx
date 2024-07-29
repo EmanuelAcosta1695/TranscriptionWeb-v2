@@ -1,5 +1,5 @@
 import { TextareaProps } from './TextareaType'
-import messages from '../../utils/messages.json'
+import { useTranslation } from 'react-i18next'
 
 export const Textarea = ({
   editableText,
@@ -7,6 +7,8 @@ export const Textarea = ({
   setText,
   setAudioFile,
 }: TextareaProps) => {
+  const { t } = useTranslation()
+
   const handleClearText = () => {
     setText('')
     setAudioFile(null)
@@ -15,7 +17,7 @@ export const Textarea = ({
   return (
     <div className="mb-3" style={{ color: 'white' }}>
       <label htmlFor="exampleFormControlTextarea1" className="form-label">
-        {messages['transcribed-text']}
+        {t('transcribed-text')}
       </label>
       <textarea
         className="form-control"

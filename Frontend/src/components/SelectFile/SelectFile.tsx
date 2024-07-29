@@ -1,7 +1,7 @@
 import React from 'react'
 import allowedExtensions from '../../utils/allowedExtensions.json'
 import { SelectFileProps } from './selectFileType'
-import messages from '../../utils/messages.json'
+import { useTranslation } from 'react-i18next'
 import { DefaultButton } from '../DefaultButton/DefaultButton'
 
 export const SelectFile = ({
@@ -9,6 +9,8 @@ export const SelectFile = ({
   handleDragOver,
   handleInputChange,
 }: SelectFileProps) => {
+  const { t } = useTranslation()
+
   const handleUploadClick = () =>
     document.getElementById('audio-upload')?.click()
 
@@ -20,10 +22,10 @@ export const SelectFile = ({
       onDragOver={handleDragOver}
       style={{ cursor: 'pointer', color: 'white' }}
     >
-      {messages['drag-and-dropd-audio-file']}
+      {t('drag-and-drop-audio-file')}
       <br />
       <DefaultButton
-        styles={'btn btn-primary btn-sm mt-2 mb-0'}
+        styles="btn btn-primary btn-sm mt-2 mb-0"
         onClick={handleUploadClick}
       >
         +

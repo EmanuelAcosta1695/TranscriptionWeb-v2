@@ -7,7 +7,7 @@ import { downloadWord } from '../../helpers/downloadFiles/downloadWord'
 import { downloadText } from '../../helpers/downloadFiles/downloadText'
 import { downloadPdf } from '../../helpers/downloadFiles/downloadPdf'
 import { showSelectFileProps } from './ShowSelectedFileType'
-import messages from '../../utils/messages.json'
+import { useTranslation } from 'react-i18next'
 import { DownloadButton } from '../DownloadButton/DownloadButton'
 
 export const ShowSelectedFile = ({
@@ -20,10 +20,12 @@ export const ShowSelectedFile = ({
   const [editableText, setEditableText] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  const { t } = useTranslation()
+
   const arrayFunctions = {
-    [messages['download-word']]: downloadWord,
-    [messages['download-text']]: downloadText,
-    [messages['download-pdf']]: downloadPdf,
+    [t('download-word')]: downloadWord,
+    [t('download-text')]: downloadText,
+    [t('download-pdf')]: downloadPdf,
   }
 
   const functionsArray = Object.entries(arrayFunctions)
@@ -38,7 +40,7 @@ export const ShowSelectedFile = ({
       setEditableText(data.texto_transcrito)
       setIsLoading(false)
     } catch (error) {
-      console.error(messages['audio-converted-error'], error)
+      console.error(t('audio-converted-error'), error)
     }
   }
 
@@ -76,7 +78,7 @@ export const ShowSelectedFile = ({
             }}
           >
             <p style={{ marginBottom: '5px', textDecoration: 'underline' }}>
-              {messages['selected-audio-file']}
+              {t('selected-audio-file')}
             </p>
             <p style={{ marginBottom: '10px' }}>{audioFile?.name}</p>
             <DeleteSelectedFileButton
@@ -92,9 +94,7 @@ export const ShowSelectedFile = ({
               marginTop: '5%',
             }}
           >
-            <p style={{ marginBottom: '10px' }}>
-              {messages['audio-file-language']}
-            </p>
+            <p style={{ marginBottom: '10px' }}>{t('audio-file-language')}</p>
             <Dropdown onLanguageChange={handleLanguageChange} />
           </div>
           <div
@@ -106,13 +106,13 @@ export const ShowSelectedFile = ({
               marginTop: '6%',
             }}
           >
-            <p style={{ marginBottom: '3%' }}>{messages['convert-question']}</p>
+            <p style={{ marginBottom: '3%' }}>{t('convert-question')}</p>
             <button
               className="btn btn-success"
               onClick={handleConvert}
               disabled={!language}
             >
-              {messages['convert-autio-to-text']}
+              {t('convert-autio-to-text')}
             </button>
           </div>
         </>
@@ -141,7 +141,7 @@ export const ShowSelectedFile = ({
               />
             ))}
             <button className="btn btn-success m-1" onClick={shareViaWhatsApp}>
-              {messages['share-on-whatsapp']}
+              {t('share-on-whatsapp')}
             </button>
           </div>
         </>

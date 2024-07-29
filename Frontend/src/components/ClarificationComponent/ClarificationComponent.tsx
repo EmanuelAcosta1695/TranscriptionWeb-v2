@@ -1,15 +1,17 @@
 import React from 'react'
-import messages from '../../utils/messages.json'
+import { useTranslation } from 'react-i18next'
 import allowedExtensions from '../../utils/allowedExtensions.json'
 
 export const ClarificationComponent = () => {
+  const { t } = useTranslation()
+
   return (
     <>
       <div className="box">
         <ul>
-          <li style={{ marginBottom: '10px' }}>{messages.warning}</li>
+          <li style={{ marginBottom: '10px' }}>{t('warning')}</li>
           <li style={{ marginBottom: '10px' }}>
-            {messages['suported-extensions']}
+            {t('suported-extensions')}
             <br />
             {allowedExtensions['allowed-extensions']}
           </li>
