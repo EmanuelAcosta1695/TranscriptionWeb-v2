@@ -1,5 +1,5 @@
 import { fetchAudioToTextProps } from './fetchAudioToTextType'
-import * as dotenv from 'dotenv'
+const BACKEND = import.meta.env.VITE_BACKEND
 
 export const fetchAudioToText = async ({
   audioFile,
@@ -11,7 +11,7 @@ export const fetchAudioToText = async ({
     formData.append('language', language)
     formData.append('filename', audioFile?.name)
 
-    const response = await fetch(process.env.BACKEND!, {
+    const response = await fetch(BACKEND!, {
       method: 'POST',
       body: formData,
     })
