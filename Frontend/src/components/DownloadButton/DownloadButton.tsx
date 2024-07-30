@@ -10,7 +10,7 @@ export const DownloadButton = ({
   return (
     <>
       <button
-        className="btn btn-info m-1"
+        className="btn btn-primary m-1"
         onClick={() => downloadFunction({ audioFile, editableText })}
       >
         {nameFunction}
