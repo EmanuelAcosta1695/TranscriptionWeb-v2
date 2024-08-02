@@ -49,7 +49,7 @@ export const ShowSelectedFile = ({
   }
 
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setEditableText(event.target.value?.[0])
+    setEditableText(event.target.value)
   }
 
   const shareViaWhatsApp = () => {

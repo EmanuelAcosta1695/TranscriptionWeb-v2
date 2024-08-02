@@ -21,10 +21,10 @@ export const Textarea = ({
       </label>
       <textarea
         className="form-control"
-        id="ControlTextarea1"
+        id="exampleFormControlTextarea1"
         rows={3}
         value={editableText}
-        onChange={handleTextChange}
+        onChange={(e) => handleTextChange(e)}
         style={{ marginTop: '20px' }}
       />
       <button className="btn btn-sm btn-danger mt-4" onClick={handleClearText}>
