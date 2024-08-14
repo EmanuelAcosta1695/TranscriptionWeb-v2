@@ -53,11 +53,6 @@ export const ShowSelectedFile = ({
     setEditableText(event.target.value)
   }
 
-  const shareViaWhatsApp = () => {
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`
-    window.open(whatsappUrl, '_blank')
-  }
-
   return (
     <div className="drop-zone">
       {isLoading ? (
@@ -137,7 +132,7 @@ export const ShowSelectedFile = ({
               marginTop: '20px',
             }}
           >
-            {functionsArray.map(([key, func]) => (
+            {/* {functionsArray.map(([key, func]) => (
               <DownloadButton
                 key={key}
                 nameFunction={key}
@@ -145,10 +140,10 @@ export const ShowSelectedFile = ({
                 audioFile={audioFile}
                 editableText={editableText}
               />
-            ))}
-            <button className="btn btn-success m-1" onClick={shareViaWhatsApp}>
+            ))} */}
+            {/* <button className="btn btn-success m-1" onClick={shareViaWhatsApp}>
               {t('share-on-whatsapp')}
-            </button>
+            </button> */}
           </div>
         </>
       )}
