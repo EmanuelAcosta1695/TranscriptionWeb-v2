@@ -28,6 +28,10 @@ export const TextareaTranslation = ({
     })
   }
 
+  const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTranslatedText(event.target.value)
+  }
+
   return (
     <div className="mb-3 flex flex-col" style={{ color: 'white' }}>
       <label className="form-label">Traducir texto a:</label>
@@ -56,8 +60,8 @@ export const TextareaTranslation = ({
           className="form-control"
           rows={3}
           value={translatedText}
+          onChange={(e) => handleTextChange(e)}
           style={{ marginTop: '20px' }}
-          readOnly
         />
       )}
     </div>
