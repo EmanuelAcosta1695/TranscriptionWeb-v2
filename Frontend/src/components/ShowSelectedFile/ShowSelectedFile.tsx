@@ -9,6 +9,7 @@ import { downloadPdf } from '../../helpers/downloadFiles/downloadPdf'
 import { showSelectFileProps } from './ShowSelectedFileType'
 import { useTranslation } from 'react-i18next'
 import { DownloadButton } from '../DownloadButton/DownloadButton'
+import { TextareaTranslation } from '../TextareaTranslation/TextareaTransaltion'
 
 export const ShowSelectedFile = ({
   clearFileAndNotification,
@@ -124,6 +125,11 @@ export const ShowSelectedFile = ({
             setText={setText}
             setAudioFile={setAudioFile}
           />
+          <TextareaTranslation
+            editableText={editableText}
+            language={language}
+          />
+
           <div
             style={{
               display: 'flex',

@@ -17,7 +17,7 @@ export const Dropdown = ({ onLanguageChange }: onLanguageChange) => {
   }
 
   return (
-    <div className="dropdown">
+    <div className="dropdown relative flex flex-col justify-center items-center">
       <button
         className="btn btn-success dropdown-toggle"
         type="button"
@@ -27,7 +27,10 @@ export const Dropdown = ({ onLanguageChange }: onLanguageChange) => {
       >
         {language || 'Idioma'}
       </button>
-      <div className={`dropdown-menu ${isOpen ? 'show' : ''}`}>
+      <div
+        className={`dropdown-menu absolute mt-2 ${isOpen ? 'show' : ''}`}
+        style={{ justifyContent: 'center' }}
+      >
         {languages.map((languageAllow) => (
           <a
             key={languageAllow}
