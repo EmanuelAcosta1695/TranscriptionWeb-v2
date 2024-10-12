@@ -45,14 +45,15 @@ Make sure you have the following installed on your machine:
    - Set up your environment variables for Google Cloud credentials in a .env file.
 4. Run the Project:
    - Start the backend:
-     ```bash
-     npm run start:dev
-     ```
+   ```bash
+   npm run start:dev
+   ```
    - Start the frontend:
-     ```bash
-     cd client
-     npm run dev
-     ```
+   ```bash
+   cd client
+   npm run dev
+   ```
+   
 **Usage**
 - Open your browser and navigate to http://localhost:3000 (or the port you specified) to access the frontend.
 - Upload your audio file and specify the language.
