@@ -3,7 +3,10 @@ import { NotificationProps } from './NotificationType'
 import { left } from '@popperjs/core'
 import { DefaultButton } from '../DefaultButton/DefaultButton'
 
-export const Notification = ({ message }: NotificationProps) => {
+export const Notification = ({
+  message,
+  color = 'green',
+}: NotificationProps) => {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -30,7 +33,7 @@ export const Notification = ({ message }: NotificationProps) => {
         position: 'fixed',
         top: '10%',
         left: '0.5%',
-        backgroundColor: 'green',
+        backgroundColor: color,
         color: 'white',
         padding: '10px',
         borderRadius: '5px',

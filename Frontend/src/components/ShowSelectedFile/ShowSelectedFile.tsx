@@ -10,6 +10,7 @@ import { showSelectFileProps } from './ShowSelectedFileType'
 import { useTranslation } from 'react-i18next'
 import { DownloadButton } from '../DownloadButton/DownloadButton'
 import { TextareaTranslation } from '../TextareaTranslation/TextareaTransaltion'
+import { Notification } from '../Notification/Notification'
 
 export const ShowSelectedFile = ({
   clearFileAndNotification,
@@ -20,6 +21,14 @@ export const ShowSelectedFile = ({
   const [text, setText] = useState<string>('')
   const [editableText, setEditableText] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const [notificationMessage, setNotificationMessage] = useState<string | null>(
+    null
+  )
+  const [notificationColor, setNotificationColor] = useState<string | null>(
+    null
+  )
+  const [showNotification, setShowNotification] = useState<boolean>(false)
 
   const { t } = useTranslation()
 
@@ -37,8 +46,17 @@ export const ShowSelectedFile = ({
     try {
       const { data } = await fetchAudioToText({ audioFile, language })
       console.log('Texto convertido:', data)
-      setText(data.texto_transcrito)
-      setEditableText(data.texto_transcrito)
+
+      if (!data.transcription || data.transcription.length === 0) {
+        setIsLoading(false)
+        setNotificationMessage(t('audio-converted-error'))
+        setNotificationColor('red')
+        setShowNotification(true)
+        return
+      }
+
+      setText(data.transcription)
+      setEditableText(data.transcription)
       setIsLoading(false)
     } catch (error) {
       console.error(t('audio-converted-error'), error)
@@ -146,6 +164,12 @@ export const ShowSelectedFile = ({
             </button> */}
           </div>
         </>
+      )}
+      {showNotification && (
+        <Notification
+          message={notificationMessage}
+          color={notificationColor!}
+        />
       )}
     </div>
   )
