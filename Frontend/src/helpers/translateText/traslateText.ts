@@ -1,35 +1,35 @@
 import { traslateTextType } from './traslateTextType'
-import { languagesObject } from './languagesObject'
+const BACKEND = import.meta.env.VITE_BACKEND_TRANSLATION
 
 export const translateText = async ({
   text,
   targetLanguage,
   language,
 }: traslateTextType): Promise<string | null> => {
-  const sourceLangCode = languagesObject[language] || 'auto'
-  const targetLangCode = languagesObject[targetLanguage] || 'auto'
-
-  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLangCode}&tl=${targetLangCode}&dt=t&q=${encodeURI(
-    text
-  )}`
+  const payload = {
+    text,
+    targetLanguage,
+    language,
+  }
 
   try {
-    const response = await fetch(url)
-    const data = await response.json()
-    console.log('Response data:', data)
+    const response = await fetch(BACKEND, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
 
-    if (
-      Array.isArray(data) &&
-      Array.isArray(data[0]) &&
-      Array.isArray(data[0][0])
-    ) {
-      return data[0][0][0]
-    } else {
-      console.error('Unexpected response format:', data)
-      return null
+    if (!response.ok) {
+      throw new Error('Failed to translate text')
     }
+
+    const data = await response.json()
+
+    return data.translatedText || null
   } catch (error) {
-    console.error('Error al traducir el texto:', error)
+    console.error('Error translating text:', error)
     return null
   }
 }

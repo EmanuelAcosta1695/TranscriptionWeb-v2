@@ -15,25 +15,18 @@ export const TranscriptionApp = () => {
   const [showNotification, setShowNotification] = useState<boolean>(false)
   const { t } = useTranslation()
 
-  const showNotificationMessage = (message: string) => {
-    setNotificationMessage(message)
-    setShowNotification(true)
-    setTimeout(() => {
-      setNotificationMessage(null)
-      setShowNotification(false)
-    }, 3000)
-  }
-
   const handleFileChange = (file: File) => {
     const extension = '.' + file.name.split('.').pop()?.toLowerCase()
 
     if (extension && !allowedExtensionsSet.has(extension)) {
-      showNotificationMessage(t('invalid-file'))
+      setNotificationMessage(t('invalid-file'))
+      setShowNotification(true)
       return
     }
 
     setAudioFile(file)
-    showNotificationMessage(t('file-uploaded'))
+    setNotificationMessage(t('file-uploaded'))
+    setShowNotification(true)
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

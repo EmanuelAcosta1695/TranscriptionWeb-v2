@@ -45,7 +45,6 @@ export const ShowSelectedFile = ({
 
     try {
       const { data } = await fetchAudioToText({ audioFile, language })
-      console.log('Texto convertido:', data)
 
       if (!data.transcription || data.transcription.length === 0) {
         setIsLoading(false)

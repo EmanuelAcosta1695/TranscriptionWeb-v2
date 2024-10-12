@@ -3,7 +3,7 @@
     "file-uploaded": "File uploaded successfully",
     "warning": "Only audio files without background noise and with good pronunciation will be perfectly transcribed.",
     "suported-extensions": "Supported extensions are: ",
-    "audio-converted-error": "Error converting audio to text: ",
+    "audio-converted-error": "Error converting audio to text.",
     "transcribed-text": "Transcribed Text: ",
     "audio-file-language": "What language is the file in?",
     "convert-question": "Do you want to transcribe the selected audio?",
