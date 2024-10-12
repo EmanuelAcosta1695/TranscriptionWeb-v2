@@ -12,8 +12,8 @@ export const Dropdown = ({ onLanguageChange }: onLanguageChange) => {
 
   const handleLanguageSelection = (selectedLanguage: string) => {
     setLanguage(selectedLanguage)
-    onLanguageChange(selectedLanguage) // Llama a la función de devolución de llamada con el idioma seleccionado
-    setIsOpen(false) // Cerrar el menú desplegable después de seleccionar el idioma
+    onLanguageChange(selectedLanguage) // Calls the callback function with the selected language
+    setIsOpen(false) // Close dropdown menu after selecting language
   }
 
   return (
