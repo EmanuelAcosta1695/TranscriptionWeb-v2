@@ -1,16 +1,26 @@
+import { mailtrapClient, sender } from './mailtrap.config.js'
 import {
   PASSWORD_RESET_REQUEST_TEMPLATE,
   PASSWORD_RESET_SUCCESS_TEMPLATE,
   VERIFICATION_EMAIL_TEMPLATE,
 } from './emailTemplates.js'
-import { mailtrapClient, sender } from './mailtrap.config.js'
+import {
+  BaseEmail,
+  PasswordResetEmailArgs,
+  VerificationEmailArgs,
+  WelcomeEmailArgs,
+} from '../types/email.type.js'
 
-export const sendVerificationEmail = async (email, verificationToken) => {
+export const sendVerificationEmail = async (
+  args: VerificationEmailArgs
+): Promise<void> => {
+  const { email, verificationToken } = args
+
   const recipient = [{ email }]
 
   try {
     const response = await mailtrapClient.send({
-      from: sender,
+      from: sender!,
       to: recipient,
       subject: 'Verify your email',
       html: VERIFICATION_EMAIL_TEMPLATE.replace(
@@ -27,7 +37,11 @@ export const sendVerificationEmail = async (email, verificationToken) => {
   }
 }
 
-export const sendWelcomeEmail = async (email, name) => {
+export const sendWelcomeEmail = async (
+  args: WelcomeEmailArgs
+): Promise<void> => {
+  const { email, name } = args
+
   const recipient = [{ email }]
 
   try {
@@ -48,7 +62,11 @@ export const sendWelcomeEmail = async (email, name) => {
   }
 }
 
-export const sendPasswordResetEmail = async (email, resetURL) => {
+export const sendPasswordResetEmail = async (
+  args: PasswordResetEmailArgs
+): Promise<void> => {
+  const { email, resetURL } = args
+
   const recipient = [{ email }]
 
   try {
@@ -59,13 +77,17 @@ export const sendPasswordResetEmail = async (email, resetURL) => {
       html: PASSWORD_RESET_REQUEST_TEMPLATE.replace('{resetURL}', resetURL),
       category: 'Password Reset',
     })
+
+    console.log('Password reset email sent successfully', response)
   } catch (error) {
     console.error('Error sending password reset email: ', error)
     throw new Error(`Error sending password reset email: ${error}`)
   }
 }
 
-export const sentResetSuccessEmail = async (email) => {
+export const sentResetSuccessEmail = async (args: BaseEmail): Promise<void> => {
+  const { email } = args
+
   const recipient = [{ email }]
 
   try {

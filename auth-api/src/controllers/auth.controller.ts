@@ -1,7 +1,6 @@
 import bcryptjs from 'bcryptjs'
 import crypto from 'crypto'
-
-import { User } from '../models/user.model.js'
+import { User } from '../models/user.model.ts'
 import { generateVerificationCode } from '../utils/generateVerificationCode.js'
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js'
 import {
@@ -10,8 +9,10 @@ import {
   sendWelcomeEmail,
   sentResetSuccessEmail,
 } from '../mailtrap/emails.js'
+import { Request, Response } from 'express'
+import { CustomRequest } from '../middleware/verifyToken.ts'
 
-export const signup = async (req, res) => {
+export const signup = async (req: Request, res: Response) => {
   const { email, password, name } = req.body
   try {
     if (!email || !password || !name) {
@@ -21,9 +22,8 @@ export const signup = async (req, res) => {
     const userAlreadyExists = await User.findOne({ email })
 
     if (userAlreadyExists) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'user already exists' })
+      res.status(400).json({ success: false, message: 'user already exists' })
+      return
     }
 
     const hashedPassword = await bcryptjs.hash(password, 10)
@@ -40,48 +40,51 @@ export const signup = async (req, res) => {
 
     generateTokenAndSetCookie(res, user._id)
 
-    sendVerificationEmail(user.email, verificationToken)
+    await sendVerificationEmail({
+      email: user.email,
+      verificationToken,
+    })
 
     res.status(201).json({
       success: true,
       message: 'User created successfully',
-      user: { ...user._doc, password: undefined },
+      user: { ...user.toObject(), password: undefined },
     })
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({ success: false, message: error.message })
   }
 }
 
-export const verifyEmail = async (req, res) => {
+export const verifyEmail = async (req: Request, res: Response) => {
   const { code } = req.body
 
   try {
     const user = await User.findOne({
       verificationToken: code,
       // verify that the token is not expired
-      verificationTokenExpiresAt: { $gt: Date.now() }, // gt -> grate than
+      verificationTokenExpiresAt: { $gt: Date.now() },
     })
 
     if (!user) {
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         message: 'Invalid or expired verification code',
       })
+      return
     }
 
     user.isVerified = true
-    // clean these properties because we don't need them for now.
     user.verificationToken = undefined
     user.verificationTokenExpiresAt = undefined
     await user.save()
 
-    await sendWelcomeEmail(user.email, user.name)
+    await sendWelcomeEmail({ email: user.email, name: user.name })
 
     res.status(200).json({
       success: true,
       message: 'Email verified successfully',
       user: {
-        ...user._doc,
+        ...user.toObject(),
         password: undefined,
       },
     })
@@ -91,60 +94,59 @@ export const verifyEmail = async (req, res) => {
   }
 }
 
-export const login = async (req, res) => {
+export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body
 
   try {
     const user = await User.findOne({ email })
     if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'Invalid credentials' })
+      res.status(400).json({ success: false, message: 'Invalid credentials' })
+      return
     }
 
     const isPasswordValid = await bcryptjs.compare(password, user.password)
     if (!isPasswordValid) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'Invalid credentials' })
+      res.status(400).json({ success: false, message: 'Invalid credentials' })
+      return
     }
 
     generateTokenAndSetCookie(res, user._id)
 
-    user.lastLogin = Date()
+    user.lastLogin = new Date()
 
     res.status(200).json({
       success: true,
       messsage: 'Logged in successfully',
       user: {
-        ...user._doc,
+        ...user.toObject(),
         password: undefined,
       },
     })
-  } catch (error) {
+  } catch (error: any) {
     console.log('error in login ', error)
     res.status(500).json({ success: false, message: error.message })
   }
 }
 
-export const logout = (req, res) => {
+export const logout = (req: Request, res: Response) => {
   res.clearCookie('token')
   res.status(200).json({ success: true, message: 'Logged out successfully' })
 }
 
-export const forgotPassword = async (req, res) => {
+export const forgotPassword = async (req: Request, res: Response) => {
   const { email } = req.body
 
   try {
     const user = await User.findOne({ email })
 
     if (!user) {
-      return res.status(400).json({ success: false, message: 'user not found' })
+      res.status(400).json({ success: false, message: 'user not found' })
+      return
     }
 
     // Generate reset token
     const resetToken = crypto.randomBytes(20).toString('hex')
-    const resetTokenExpiresAt = Date.now() + 1 * 60 * 60 * 1000 // 1 hour
+    const resetTokenExpiresAt = new Date(Date.now() + 1 * 60 * 60 * 1000) // 1 hour
 
     user.resetPasswordToken = resetToken
     user.resetPasswordExpiresAt = resetTokenExpiresAt
@@ -152,22 +154,22 @@ export const forgotPassword = async (req, res) => {
     await user.save()
 
     // send email
-    await sendPasswordResetEmail(
-      user.email,
-      `${process.env.CLIENT_URL}/reset-password/${resetToken}`
-    )
+    await sendPasswordResetEmail({
+      email: user.email,
+      resetURL: `${process.env.CLIENT_URL}/reset-password/${resetToken}`,
+    })
 
     res.status(200).json({
       success: true,
       messsage: 'Password reset link sent to your email',
     })
-  } catch (error) {
+  } catch (error: any) {
     console.log('Error in forgotPassword ', error)
     res.status(500).json({ success: false, message: error.message })
   }
 }
 
-export const resetPassword = async (req, res) => {
+export const resetPassword = async (req: Request, res: Response) => {
   try {
     const { token } = req.params
     const { password } = req.body
@@ -178,9 +180,10 @@ export const resetPassword = async (req, res) => {
     })
 
     if (!user) {
-      return res
+      res
         .status(400)
         .json({ success: false, message: 'Invalid or expired reset token' })
+      return
     }
 
     // update password
@@ -190,26 +193,28 @@ export const resetPassword = async (req, res) => {
     user.resetPasswordExpiresAt = undefined
     await user.save()
 
-    await sentResetSuccessEmail(user.email)
+    await sentResetSuccessEmail({ email: user.email })
 
     res
       .status(200)
       .json({ success: true, message: 'Password reset successful' })
-  } catch (error) {
+  } catch (error: any) {
     console.log('Error resetting password successfully.', error)
     res.status(500).json({ success: false, message: error.message })
   }
 }
 
-export const checkAuth = async (req, res) => {
+export const checkAuth = async (req: CustomRequest, res: Response) => {
   try {
-    const user = await User.findById(req.userId).select('-password') // unselect password
+    const user = await User.findById(req.userId).select('-password')
 
-    if (!user)
-      return res.status(400).json({ success: false, message: 'User not found' })
+    if (!user) {
+      res.status(400).json({ success: false, message: 'User not found' })
+      return
+    }
 
     res.status(200).json({ success: true, user })
-  } catch (error) {
+  } catch (error: any) {
     console.log('Error in checkAuth', error)
     res.status(500).json({ success: false, message: error.message })
   }

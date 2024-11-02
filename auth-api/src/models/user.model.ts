@@ -1,6 +1,17 @@
-import mongoose from 'mongoose'
+import mongoose, { Document } from 'mongoose'
 
-// with timestamps: true createat and updateat field will be automatically added into the document
+interface IUser extends Document {
+  email: string
+  password: string
+  name: string
+  lastLogin: Date
+  isVerified: boolean
+  resetPasswordToken?: string
+  resetPasswordExpiresAt?: Date
+  verificationToken?: string
+  verificationTokenExpiresAt?: Date
+}
+
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -32,4 +43,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-export const User = mongoose.model('User', userSchema)
+export const User = mongoose.model<IUser>('User', userSchema)
